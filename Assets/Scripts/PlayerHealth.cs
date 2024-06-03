@@ -4,17 +4,34 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public float maxHealth;
-    public float currentHealth;
+    [SerializeField]private int maxHealth = 3;
+    [SerializeField]private int currentHealth;
+    [SerializeField]private float iFrame = 2f;
 
     void Start()
     {
         currentHealth = maxHealth;
     }
 
+   
     public void Damage()
-    {
-        currentHealth -=1;
+    { 
+        if(iFrame <=0f)
+        {
+            currentHealth -=1;
+            iFrame -= Time.deltaTime;
+        }
+        
+           
     
     }
+
+    private void Update()
+    {
+    if(iFrame <=0f)
+    {
+        iFrame = 2f;
+    }
+    }
+    
 }
