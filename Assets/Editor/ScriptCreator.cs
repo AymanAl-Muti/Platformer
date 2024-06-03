@@ -15,14 +15,6 @@ public class ScriptCreator : EditorWindow
 
     private void OnGUI()
     {
-        GUIStyle titleStyle = new()
-        {
-            alignment = TextAnchor.MiddleCenter,
-            fontStyle = FontStyle.Bold,
-            normal = new(){textColor = Color.white}
-        };
-
-        GUILayout.Label("Script Creator", titleStyle);
         GUILayout.Label("Script name:");
 
         scriptName = EditorGUILayout.TextField(String.Empty, scriptName);

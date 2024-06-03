@@ -1,14 +1,15 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     private new Rigidbody2D rigidbody;
     private new BoxCollider2D collider;
     [SerializeField] private LayerMask platformLayerMask;
-    private float horizontalInput;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float jumpSpeed;
+    [SerializeField] private float jumpForce;
     private bool canDoubleJump;
+    private float horizontalInput;
 
     private bool IsGrounded => Physics2D.BoxCast
         (
@@ -28,39 +29,43 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-
         if(IsGrounded)
         {
             canDoubleJump = true;
-        }
-
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            TryJump();
         }
     }
 
     private void FixedUpdate()
     {
-        rigidbody.velocity = new Vector2(horizontalInput * moveSpeed, rigidbody.velocity.y);
+        if(horizontalInput != 0)
+        {
+            rigidbody.velocity = new Vector2(horizontalInput * moveSpeed, rigidbody.velocity.y);
+        }
     }
 
-    private void TryJump()
+    public void HandleMovement(InputAction.CallbackContext context)
     {
-        if(IsGrounded)
+        horizontalInput = context.ReadValue<Vector2>().x;
+    }
+
+    public void TryJump(InputAction.CallbackContext context)
+    {
+        if(context.performed)
         {
-            Jump();
-        }
-        else if(canDoubleJump)
-        {
-            canDoubleJump = false;
-            Jump();
+            if(IsGrounded)
+            {
+                Jump();
+            }
+            else if(canDoubleJump)
+            {
+                canDoubleJump = false;
+                Jump();
+            }
         }
     }
 
     private void Jump()
     {
-        rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpSpeed);
+        rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce);
     }
 }
