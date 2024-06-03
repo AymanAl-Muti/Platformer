@@ -1,24 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField]private int maxHealth = 3;
-    [SerializeField]private int currentHealth;
-    [SerializeField]private float iFrame = 2f;
+    [SerializeField] private int maxHealth = 3;
+    private int currentHealth;
+    [SerializeField] private float iFrame = 2f;
 
-    void Start()
+    private void Awake()
     {
         currentHealth = maxHealth;
     }
-
    
     public void Damage()
     { 
-        if(iFrame <=0f)
+        if(iFrame <= 0f)
         {
-            currentHealth -=1;
+            currentHealth -= 1;
             iFrame -= Time.deltaTime;
         }
         
@@ -28,10 +25,9 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-    if(iFrame <=0f)
-    {
-        iFrame = 2f;
+        if(iFrame <= 0f)
+        {
+            iFrame = 2f;
+        }
     }
-    }
-    
 }
