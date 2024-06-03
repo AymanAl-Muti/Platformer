@@ -18,8 +18,6 @@ public class PlayerHealth : MonoBehaviour
             currentHealth -= 1;
             iFrame -= Time.deltaTime;
         }
-        
-           
     
     }
 
