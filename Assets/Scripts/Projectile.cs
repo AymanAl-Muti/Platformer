@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private void OnCollisionEnter()
+    private void OnCollisionEnter2D()
     {
-        Debug.Log("Collision");
-        
         Destroy(gameObject);
     }
 }
