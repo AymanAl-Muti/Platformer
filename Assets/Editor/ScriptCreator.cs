@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
@@ -24,7 +25,7 @@ public class ScriptCreator : EditorWindow
         GUILayout.Label("Script Creator", titleStyle);
         GUILayout.Label("Script name:");
 
-        scriptName = EditorGUILayout.TextField("", scriptName);
+        scriptName = EditorGUILayout.TextField(String.Empty, scriptName);
 
         if(GUILayout.Button("Create Script"))
         {
@@ -32,12 +33,12 @@ public class ScriptCreator : EditorWindow
         }
     }
 
-    private void CreateScript()
+    private bool CreateScript()
     {
         if (scriptName.Length == 0)
         {
             Debug.Log("Script name length cannot be zero!");
-            return;
+            return false;
         }
 
         // remove spaces and capitalize the first letter
@@ -50,17 +51,18 @@ public class ScriptCreator : EditorWindow
         if (File.Exists(scriptPath))
         {
             Debug.Log("A file of that name already exists!");
-            return;
+            return false;
         }
 
-        using StreamWriter outfile = new(scriptPath);
-        outfile.WriteLine("using UnityEngine;");
-        outfile.WriteLine();
-        outfile.WriteLine($"public class {scriptName} : MonoBehaviour");
-        outfile.WriteLine("{");
-        outfile.WriteLine("\t");
-        outfile.Write("}");
+        using StreamWriter outFile = new(scriptPath);
+        outFile.WriteLine("using UnityEngine;");
+        outFile.WriteLine();
+        outFile.WriteLine($"public class {scriptName} : MonoBehaviour");
+        outFile.WriteLine("{");
+        outFile.WriteLine("    ");
+        outFile.Write("}");
 
         AssetDatabase.Refresh();
+        return true;
     }
 }
