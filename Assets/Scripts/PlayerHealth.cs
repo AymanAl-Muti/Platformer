@@ -1,31 +1,31 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private int maxHealth = 3;
-    private int currentHealth;
-    [SerializeField] private float iFrame = 2f;
+    private Slider healthBar;
+    private readonly float maxHealth = 100;
+    private float currentHealth;
 
     private void Awake()
     {
         currentHealth = maxHealth;
     }
+
+    private void Start()
+    {
+        healthBar = GameObject.Find("HealthBar").GetComponent<Slider>();
+    }
    
-    public void Damage()
-    { 
-        if(iFrame <= 0f)
-        {
-            currentHealth -= 1;
-            iFrame -= Time.deltaTime;
-        }
-    
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        healthBar.value = currentHealth / maxHealth;
     }
 
-    private void Update()
+    public void Heal(float amount)
     {
-        if(iFrame <= 0f)
-        {
-            iFrame = 2f;
-        }
+        currentHealth += amount;
+        healthBar.value = currentHealth / maxHealth;
     }
 }
