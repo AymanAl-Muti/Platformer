@@ -1,60 +1,30 @@
-using System;
-using UnityEngine;
 using UnityEditor;
 using System.IO;
 
 public class ScriptCreator : EditorWindow
 {
-    private string scriptName;
-
-    [MenuItem("Window/Custom Windows/Script Creator")]
-    public static void ShowWindow()
+    private const string ScriptText = "using UnityEngine;\n\npublic class $1 : MonoBehaviour\n{\n    \n}";
+    
+    [MenuItem("Assets/Create/Good C# Script", false, 50)]
+    private static void CreateCustomScript()
     {
-        GetWindow<ScriptCreator>("Script Creator");
+        ProjectWindowUtil.CreateAssetWithContent("NewScript.cs", string.Empty);
+ 
+        Selection.selectionChanged += SelectionHook;
     }
-
-    private void OnGUI()
+    
+    private static void SelectionHook()
     {
-        GUILayout.Label("Script name:");
-
-        scriptName = EditorGUILayout.TextField(String.Empty, scriptName);
-
-        if(GUILayout.Button("Create Script"))
+        if(Selection.activeObject is null)
         {
-            CreateScript();
+            return;
         }
-    }
-
-    private bool CreateScript()
-    {
-        if (scriptName.Length == 0)
-        {
-            Debug.Log("Script name length cannot be zero!");
-            return false;
-        }
-
-        // remove spaces and capitalize the first letter
-        scriptName = scriptName.Replace(" ", "");
-        scriptName = char.ToUpper(scriptName[0]) + scriptName[1..];
-
-        string scriptPath = $"Assets/Scripts/{scriptName}.cs";
-
-        // make sure this script doesn't already exist
-        if (File.Exists(scriptPath))
-        {
-            Debug.Log("A file of that name already exists!");
-            return false;
-        }
-
-        using StreamWriter outFile = new(scriptPath);
-        outFile.WriteLine("using UnityEngine;");
-        outFile.WriteLine();
-        outFile.WriteLine($"public class {scriptName} : MonoBehaviour");
-        outFile.WriteLine("{");
-        outFile.WriteLine("    ");
-        outFile.Write("}");
-
+        
+        Selection.selectionChanged -= SelectionHook;
+        
+        string assetPath = AssetDatabase.GetAssetPath(Selection.activeObject);
+        string scriptName = Path.GetFileNameWithoutExtension(assetPath);
+        File.WriteAllText(assetPath, ScriptText.Replace("$1", scriptName));
         AssetDatabase.Refresh();
-        return true;
     }
 }

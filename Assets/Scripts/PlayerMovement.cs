@@ -11,15 +11,14 @@ public class PlayerMovement : MonoBehaviour
     private bool canDoubleJump;
     private float horizontalInput;
 
-    private bool IsGrounded => Physics2D.BoxCast
-        (
-            collider.bounds.center,
-            collider.bounds.size,
-            0,
-            Vector2.down,
-            0.1f,
-            platformLayerMask
-        );
+    private bool IsGrounded => Physics2D.BoxCast(
+        collider.bounds.center,
+        collider.bounds.size,
+        0,
+        Vector2.down,
+        0.1f,
+        platformLayerMask
+    );
     
     private void Awake()
     {
