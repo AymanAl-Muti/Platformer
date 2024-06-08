@@ -1,21 +1,31 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerGun : MonoBehaviour
 {
     [SerializeField] private GameObject projectile;
-    
-    private void Update()
+    [SerializeField] private float bulletSpeed;
+    private bool canShoot;
+    private void Awake()
     {
-        if(Input.GetKeyDown(KeyCode.J))
-        {
-            Shoot();
-        }
+        canShoot = true;
     }
 
     private void Shoot()
     {
         GameObject proj = Instantiate(projectile, transform.position, Quaternion.identity);
-        
-        proj.GetComponent<Rigidbody2D>().velocity = transform.right * 30;
+
+        proj.GetComponent<Rigidbody2D>().velocity = Vector3.Normalize(GameManager.Instance.CursorPos - (Vector2)transform.position) * bulletSpeed;
+    }
+
+    public void OnShootKeyPressed(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            if(canShoot)
+            {
+                Shoot();
+            }
+        }
     }
 }

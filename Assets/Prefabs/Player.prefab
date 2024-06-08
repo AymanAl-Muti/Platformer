@@ -205,6 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 4223657617826109303, guid: a714334c0c3aaa245b4e2e36fc24659f, type: 3}
+  bulletSpeed: 30
 --- !u!114 &5988124630286019480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +263,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ab701afb-7b54-43f5-b32a-c37d4f0861f1
     m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1465d765-b7d7-457f-acd1-0db6869fba97
+    m_ActionName: Game/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7398821961601858488}
+        m_TargetAssemblyTypeName: PlayerGun, Assembly-CSharp
+        m_MethodName: OnShootKeyPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d0090a24-bcbe-42a4-89d3-5820c0308869
+    m_ActionName: Player/Shoot[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
