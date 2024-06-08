@@ -13,9 +13,11 @@ public class PlayerGun : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject proj = Instantiate(projectile, transform.position, Quaternion.identity);
+        Vector2 bulletDirection = Vector3.Normalize(GameManager.Instance.CursorPos - (Vector2)transform.position);
+        
+        GameObject proj = Instantiate(projectile, transform.position, Quaternion.FromToRotation(transform.position, bulletDirection));
 
-        proj.GetComponent<Rigidbody2D>().velocity = Vector3.Normalize(GameManager.Instance.CursorPos - (Vector2)transform.position) * bulletSpeed;
+        proj.GetComponent<Rigidbody2D>().velocity = bulletDirection * bulletSpeed;
     }
 
     public void OnShootKeyPressed(InputAction.CallbackContext context)

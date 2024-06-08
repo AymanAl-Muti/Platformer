@@ -178,7 +178,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   moveSpeed: 10
-  jumpForce: 20
+  jumpSpeed: 20
+  dashSpeed: 30
+  dashDuration: 0.1
+  dashCooldown: 1
 --- !u!114 &612452282955135919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,7 +238,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4783204034660268886}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: HandleMovement
+        m_MethodName: OnMovementKeyPressed
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -251,7 +254,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4783204034660268886}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: TryJump
+        m_MethodName: OnJumpKeyPressed
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -283,6 +286,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: d0090a24-bcbe-42a4-89d3-5820c0308869
     m_ActionName: Player/Shoot[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4783204034660268886}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnDashKeyPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: dbf6bf86-e9a2-4cf4-8868-d05eb4dab56e
+    m_ActionName: Player/Dash[/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
