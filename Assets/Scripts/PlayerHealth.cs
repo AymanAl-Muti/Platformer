@@ -28,6 +28,11 @@ public class PlayerHealth : MonoBehaviour
         {
             Heal(10);
         }
+        if(transform.position.y <=-10)
+        {
+            Debug.Log("Out of Bounds");
+            TakeDamage(100);
+        }
     }
 
     public void TakeDamage(float amount)
