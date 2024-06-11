@@ -6,6 +6,8 @@ public class PlayerHealth : MonoBehaviour
     private Slider healthBar;
     [SerializeField] private float maxHealth;
     private float currentHealth;
+    [SerializeField] private Respawn targetScript;
+
 
     private void Awake()
     {
@@ -31,7 +33,7 @@ public class PlayerHealth : MonoBehaviour
         if(transform.position.y <=-10)
         {
             Debug.Log("Out of Bounds");
-            TakeDamage(100);
+            TakeDamage(maxHealth);
         }
     }
 
@@ -59,5 +61,8 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("The player died");
+        targetScript.Restart();
+        currentHealth = maxHealth;
+        
     }
 }
